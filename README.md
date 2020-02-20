@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-Please 
 =======
 # jenkins-git
 
