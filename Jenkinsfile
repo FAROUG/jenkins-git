@@ -1,6 +1,7 @@
+/* import shared library */
+@Library('Jenkins-Shared-Library')_
 pipeline {
     agent any
-slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)" 
     stages {
         stage('Build') {
             steps {
@@ -10,6 +11,13 @@ slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL
                     ls -lah
                 '''
             }
+        }
+    }
+post {
+        always {
+	    /* Use slackNotifier.groovy from shared library and provide current build result as parameter */   
+            slackNotifier(currentBuild.currentResult)
+            cleanWs()
         }
     }
 }
